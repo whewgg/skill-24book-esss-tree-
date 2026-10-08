@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>二十六史全文库 · Skill 功能全览</title>
+<style>
+:root{--bg:#faf7f2;--ink:#1c1a17;--muted:#78706a;--red:#c0392b;--card:#fff;--line:#e8e1d5;--user:#e8f0e2;--bot:#f7f3ec;--hl:#fce0da;--term:#1e1c19;--tx:#ece6db;--dim:#968d81;--ok:#7ec888;--bad:#f67c6a;--hlt:#ffd678}
+@media (prefers-color-scheme:dark){:root{--bg:#171513;--ink:#ece6db;--muted:#a79e92;--card:#221f1c;--line:#38342f;--user:#2b3a2a;--bot:#2a2622;--hl:#5a2a24}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:32px 16px 80px}
+header .k{color:var(--red);font-weight:700;letter-spacing:.04em}
+h1{font:700 clamp(34px,7vw,60px)/1.15 "Noto Serif CJK SC","Songti SC",serif;margin:.2em 0}
+header p{color:var(--muted);margin:.2em 0 1em}
+video{width:100%;border-radius:14px;border:1px solid var(--line);background:#000}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;margin:28px 0}
+.eyebrow{color:var(--red);font-weight:700;font-size:14px}
+h2{font:700 30px/1.3 "Noto Serif CJK SC","Songti SC",serif;margin:.1em 0 .4em}
+ul{margin:.2em 0 1em;padding-left:1.2em}li::marker{color:var(--red)}
+.lab{font-size:13px;color:var(--muted);margin:16px 0 6px}
+.msg{display:flex;gap:10px;margin:8px 0}.msg.user{justify-content:flex-end}
+.bub{border-radius:14px;padding:8px 14px}.user .bub{background:var(--user)}.bot .bub{background:var(--bot);max-width:100%}
+.bub p{margin:.35em 0}.bub mark{background:var(--hl);color:var(--red);font-weight:700;border-radius:3px;padding:0 1px}.g{color:var(--muted)}
+.av{flex:none;width:30px;height:30px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.who{font-size:13px;color:var(--muted)}
+.term{background:var(--term);color:var(--tx);border-radius:12px;padding:12px 14px;font:14px/1.65 "Noto Sans Mono CJK SC",ui-monospace,Menlo,Consolas,monospace;overflow-x:auto}
+.term .row{white-space:pre-wrap;word-break:break-all}.ok{color:var(--ok)}.bad{color:var(--bad)}.hl{color:var(--hlt)}.dim{color:var(--dim)}.b{font-weight:700}
+footer{color:var(--muted);font-size:14px;margin-top:30px}
+</style></head><body><div class="wrap">
+<header><div class="k">— 《资治通鉴》＋二十六史＋《清史稿》</div><h1>二十六史全文库</h1>
+<p>Skill · 功能全览 ｜ 27 部 · 4408 卷 · 246.9 MB 全文 · 先检索，再回答。每一项都是一问一答：提问 → 检索 → robot 答复 → 核验。</p>
+<video controls preload="metadata" src="demo.mp4"></video></header>
+<section><div class="eyebrow">01 · 原文检索与证据块</div><h2>原文检索</h2><ul><li>246.9 MB 全文实时扫描，不用先建索引</li><li>每个证据块带《书名·卷次·篇名》和路径:行号</li><li>判为 [原文]／[译文]／[待核]，只有 [原文] 能逐字照录</li><li>没有就答「本库未载」，不凭记忆</li></ul><div class="lab">群里的一次提问 · 真实记录（节选）</div><div class="chat"><div class="msg user"><div class="bub">@robot 大索貌阅</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 大索貌阅</span></div>
+<div class="row"><span class="dim"># rag query 「大索貌阅」 → 源 data｜扫描 4408 文件 / 246.9 M字｜候选 2 文件｜0.35s</span></div>
+<div class="row"><span class="hl">[E1] </span><span class="">《隋书·卷二十四·志第十九》 …/024_卷二十四·志第十九.md:35-35 [原文]</span></div>
+<div class="row"><span class="">     「…高祖令州县大索貌阅，户口不实者，正长远配，而又开相纠之科。大功已下，兼令析籍，各为户头，以防容隐。…」</span></div>
+<div class="row"><span class="hl">[E2] </span><span class="">《资治通鉴·卷176》（陈） …/资治通鉴_卷176.md:161-161 [原文]</span></div>
+<div class="row"><span class="">     「…隋主命州县大索貌阅，户口不实者，里正、党长远配；大功以下，皆令析籍，以防容隐。…」</span></div>
+<div class="row"><span class="ok b">=== 判定：有据（2 段｜关键词覆盖 1/1） ===</span></div>
+<div class="row"><span class="dim">引用纪律：只抄上面标 [原文] 的段，逐字照录、不改写；[译文] 段是后人所译，引用须注明“译文”；[待核] 段务必先 Read 原文件复核再引。</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>大索貌阅是隋代核查户口的办法。</p><p>• <b>《隋书·卷二十四·志第十九》</b>：<mark>「高祖令州县大索貌阅，户口不实者，正长远配，而又开相纠之科。大功已下，兼令析籍，各为户头，以防容隐。」</mark></p><p>• <b>《资治通鉴·卷176》</b>所记相合：<mark>「隋主命州县大索貌阅，户口不实者，里正、党长远配；大功以下，皆令析籍，以防容隐。」</mark></p><p>• 两书用词略有出入：<b>《隋书》</b>作正长，<b>《资治通鉴》</b>作里正、党长。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 4 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">02 · 通称改写·异体字·避讳</div><h2>通称与避讳</h2><ul><li>后世通称自动改按史文用词检索：乌台诗案 → 逮赴台狱</li><li>繁简、异体字自动扩展，异文并录</li><li>避讳字要换字搜：唐修《晋书》里的刘渊写作元海</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 讲讲乌台诗案</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 乌台诗案</span></div>
+<div class="row"><span class="dim"># 通称改写：「乌台诗案」是后世通称，本库原文不用此词；</span></div>
+<div class="row"><span class="dim">#   已同时按史文用词检索 → 逮赴台狱、御史狱</span></div>
+<div class="row"><span class="hl">[E1] </span><span class="">《宋史·卷三百三十八·列传第九十七》 …/338_…列传第九十七.md:47-47 [原文]</span></div>
+<div class="row"><span class="">     「…御史李定、舒亶、何正臣摭其表语，并媒蘖所为诗以为讪谤，逮赴台狱，欲置之死…」</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 刘渊 --book 05晋书文白 --count book</span></div>
+<div class="row"><span class="">     1  05晋书文白</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 元海 --book 05晋书文白 --count book</span></div>
+<div class="row"><span class="">   132  05晋书文白</span></div>
+<div class="row"><span class="hl b">→ 唐修《晋书》避李渊讳：人名多写作「元海」</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>乌台诗案是后世通称，本库原文不用此词；我按史文用词逮赴台狱检索，查到：</p><p>• <b>《宋史·卷三百三十八·列传第九十七》</b>：<mark>「御史李定、舒亶、何正臣摭其表语，并媒蘖所为诗以为讪谤，逮赴台狱，欲置之死，锻炼久之不决。神宗独怜之，以黄州团练副使安置。」</mark></p><p>库里只记经过与处置，起因以外的评说我不另行推断。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 1 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">03 · 人物字号与专传定位</div><h2>字号与专传</h2><ul><li>02 字号索引：4.06 万条「人名｜字｜路径」，问字号第一站</li><li>03 出现索引：1.32 万人 × 出现卷，★ 标本传，同名异人另标注</li><li>没有专传的人，直接告诉你从哪卷哪行读起</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 苏轼字什么？陈玉成有传吗？</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 苏轼 --fast</span></div>
+<div class="row"><span class="dim"># 03-人物出现索引｜★本传：苏轼 = 20宋史文白\现代文\338_卷三百三十八·列传第九十七.md</span></div>
+<div class="row"><span class="dim"># 02-人物字号索引｜字号：苏轼 = 子瞻</span></div>
+<div class="row"><span class="hl">[E1] ★本传 </span><span class="">《宋史·卷三百三十八·列传第九十七》 …:3-3 [原文]</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 陈玉成 --first</span></div>
+<div class="row"><span class="">索引：03-人物出现索引 有此条目</span></div>
+<div class="row"><span class="">起读（无专传 → 列传里提及最密的卷）：26清史稿文白·卷四百七十五｜16 处</span></div>
+<div class="row"><span class="hl b">注意：全库 93 处里没有一处开传式起句——此人无专传，只在他人纪传里被提及。</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>• 苏轼字子瞻。<b>《宋史·卷三百三十八·列传第九十七》</b>：<mark>「苏轼，字子瞻，眉州眉山人。」</mark></p><p>• 陈玉成：本库没有他的专传，全库 93 处都是在他人纪传里被提及，最密的是<b>《清史稿·卷四百七十五·列传二百六十二》</b>：<mark>「先是李侍贤常与陈玉成、李秀成谋解金陵围，犯江西、福建。」</mark></p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 2 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">04 · 同名异代消歧</div><h2>同名异代</h2><ul><li>朝名不是政权：「宋」＝刘宋（宋书）或赵宋（宋史）</li><li>三锚点：年号 → 国姓与帝王名 → 对手政权与都城</li><li>三个都判不出，直接问用户一句，不猜</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 元嘉年间发生了什么</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 元嘉 --count book</span></div>
+<div class="row"><span class="dim"># 查询「元嘉」→ 变体 元嘉</span></div>
+<div class="row"><span class="">  1658  14南史文白</span></div>
+<div class="row"><span class="">   488  06宋书文白</span></div>
+<div class="row"><span class="">   120  07南齐书文白</span></div>
+<div class="row"><span class="">    89  16旧唐书文白</span></div>
+<div class="row"><span class="">    71  00资治通鉴</span></div>
+<div class="row"><span class="">    52  13隋书文白</span></div>
+<div class="row"><span class="">    51  17新唐书文白</span></div>
+<div class="row"><span class="hl b">→ 一审锚点：命中 06宋书／14南史 ⇒ 刘宋</span></div>
+<div class="row"><span class="dim"># 规则：宋＝刘宋 420–479《宋书》／赵宋 960–1279《宋史》；汉、唐、周、魏、齐、梁、晋、金同理</span></div>
+<div class="row"><span class="dim"># 通鉴「宋纪」＝刘宋，不是赵宋；首次出现必加限定语</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>先定政权：<mark>「元嘉」</mark>在库里主要落在<b>《宋书》</b><b>《南史》</b>，指刘宋文帝年号（不是赵宋）；东汉桓帝也用过<mark>「元嘉」</mark>，若问的是后者请告诉我。</p><p>检索到的刘宋元嘉记载（仅为片段，不是全貌）：</p><p><b>《宋书·卷三十·志第二十》</b>：<mark>「宋文帝元嘉二十一年六月，京邑连雨百余日，大水。」</mark></p><p><b>《宋书·卷三十一·志第二十一》</b>：<mark>「元嘉二十七年八月，不雨，至二十八年三月。时索虏南寇。」</mark></p><p>要通读请从<b>《宋书·卷四·本纪第四·文帝》</b>起。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 5 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">05 · 跨书互证·帝王本纪定位</div><h2>互证与本纪</h2><ul><li>同一人同一事，多部史书并录原文，有出入就注明差异</li><li>李白：旧唐书卷一九〇下、新唐书卷二〇二各有记载</li><li>本纪通篇称「帝／上」，按本名查帝王，07 索引直接定位本纪卷</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 李白见于哪几卷？杨坚的本纪在哪？</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 李白 --count juan --book 16旧唐书文白,17新唐书文白</span></div>
+<div class="row"><span class="">     8  16旧唐书文白·卷一百九十下</span></div>
+<div class="row"><span class="">     8  17新唐书文白·卷二百二</span></div>
+<div class="row"><span class="">     4  16旧唐书文白·卷一百九十二</span></div>
+<div class="row"><span class="">     4  17新唐书文白·卷二百一</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 杨坚 --fast</span></div>
+<div class="row"><span class="dim"># 帝王本纪锚点（07-帝王本纪索引）：命中 2 卷</span></div>
+<div class="row"><span class="dim">#   隋·高祖｜《隋书·卷一·帝纪第一·高祖上》｜年号 大统、大象、大定、开皇</span></div>
+<div class="row"><span class="dim">#     自称行：高祖文皇帝，姓杨氏，讳坚，弘农郡华阴人也。…</span></div>
+<div class="row"><span class="dim">#   北朝·隋高祖｜《北史·卷十一·隋本纪上第十一》</span></div>
+<div class="row"><span class="hl b">→ 02/03 不收帝王；07 索引按本名、庙号、年号定位本纪卷，引用仍读原文</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>李白：两唐书各有本传，记载有出入。</p><p>• <b>《旧唐书·卷一百九十下·文苑下》</b>：<mark>「李白，字太白，山东人。少有逸才，志气宏放，飘然有超世之心。」</mark></p><p>• <b>《新唐书·卷二百二·列传第一百二十七》</b>：<mark>「李白，字太白，兴圣皇帝九世孙。」</mark></p><p>杨坚（隋文帝）的本纪：</p><p>• <b>《隋书·卷一·帝纪第一·高祖上》</b>：<mark>「高祖文皇帝，姓杨氏，讳坚，弘农郡华阴人也。」</mark></p><p>• <b>《北史·卷十一·隋本纪上第十一》</b>也有他的本纪，可互证。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 3 条｜《》书名 4 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">06 · 表卷·世系·宰辅年表</div><h2>表卷与世系</h2><ul><li>166 个表卷中仅 2 卷有表体（清史稿军机大臣年表）</li><li>123 卷是「（表略）」占位，128 卷已映射到 38 册机读稿</li><li>机读稿是机器识别稿，须标「字形待核」；严禁编造表内条目</li><li>另附唐、宋、明宗室世系讲解与宰辅查询指南</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 张居正哪年入阁？</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py locate 张居正 --source ocr --limit 3</span></div>
+<div class="row"><span class="">ocr｜224册｜第169页·06-表卷OCR机读稿（简体）/224_第十一冊_卷一〇七至卷一一二.md:2183</span></div>
+<div class="row"><span class="">张居正二月晋吏部左侍郎兼东阁大学士入四月晋礼部尚书武英殿大学士</span></div>
+<div class="row"><span class="dim"># 命中 1 处、1 个文件（0.24s）</span></div>
+<div class="row"><span class="hl b">→ 机读稿恒判 [OCR稿]，只作检索线索，不能当原文引</span></div>
+<div class="row"><span class="dim"># 册号速记：宋史宰辅表 161｜元史宰相年表 207｜明史宰辅年表 224｜清史稿大学士年表 262</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>张居正入阁在隆庆元年二月。</p><p>• <b>《明史·卷十九·本纪第十九》</b>：<mark>「礼部侍郎张居正为吏部左侍郎兼东阁大学士，预机务。」</mark></p><p>另：06 索引的<b>《明史宰辅年表》</b>机读稿（224 册第 169 页）也有同月晋东阁大学士的行，但它是机器识别的草稿，只作检索线索，不当原文引用。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 1 条｜《》书名 2 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">07 · 案件·制度索引</div><h2>案件与制度</h2><ul><li>08 案件索引：254 案，出处由脚本回扫语料得出，可逐条复核</li><li>「X案」是今人通称，零命中就照行内检索词查：空印案 → 空印事</li><li>「本库未载」的著名案件命中即如实答未载</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 空印案是怎么回事</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 空印案</span></div>
+<div class="row"><span class="dim"># 通称改写：「空印案」是后世通称，本库原文不用此词；</span></div>
+<div class="row"><span class="dim">#   已同时按史文用词检索 → 空印事、空印纸、空印文书</span></div>
+<div class="row"><span class="hl">[E1] </span><span class="">《明史·卷九十四》 …/094_卷九十四_文白.md:91-91 [原文]</span></div>
+<div class="row"><span class="">     「…先是，十五年空印事发。每岁布政司、府州县吏诣户部核钱粮、军需诸事，以道远，预持空印文书，遇部驳即改，以为常。…」</span></div>
+<div class="row"><span class="hl">[E2] </span><span class="">《明史·卷一百三十九·列传第二十七》 …/139_卷一百三十九_钱唐_文白.md:147-147 [原文]</span></div>
+<div class="row"><span class="">     「…士利乃为书数千言，言数事，而于空印事尤详。曰：「陛下欲深罪空印者，恐奸吏得挟空印纸，为文移以虐民耳。…」</span></div>
+<div class="row"><span class="dim"># 08-案件索引：覆盖 254 案，分 10 节（秦→清），每条 1–2 处实测出处</span></div>
+<div class="row"><span class="dim"># 本库未载：哭庙案、苏报案、杨月楼案、太原奇案、宋教仁案……命中即答「本库未载」</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>空印案是后世通称，史文作空印事。</p><p>• <b>《明史·卷九十四》</b>：<mark>「先是，十五年空印事发。每岁布政司、府州县吏诣户部核钱粮、军需诸事，以道远，预持空印文书，遇部驳即改，以为常。及是，帝疑有奸，大怒，论诸长吏死，佐贰榜百戍边。」</mark></p><p>同卷接着记：<mark>「宁海人郑士利上书讼其冤，复杖戍之。」</mark></p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">08 · 抽签讲史</div><h2>抽签讲史</h2><ul><li>用户说「讲个故事」：不反问，直接抽签</li><li>首行带签号，由书名、路径、起止行算出，可重算</li><li>只复述读到的原文窗口，不另行创作</li></ul><div class="lab">群里的一次提问 · 真实记录（节选）</div><div class="chat"><div class="msg user"><div class="bub">@robot 给我讲一个历史故事</div></div><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p><b>《辽史·卷一百一十四·列传第四十四》。签号</b><mark>#033651</mark><b>。</b></p><p>萧特烈，字讹都碗，是遥辇洼可汗宫分人。乾统年间入宿卫……天祚决意渡河奔往西夏，从臣恳切劝谏不听，人情惶恐惧怕不知如何是好。</p><p>特烈暗中对耶律兀直说：<b>「事态如此，亿兆离心，正我辈效节之秋。不早为计，奈社稷何」</b></p><p>……不到三十天，与朮烈一起被乱兵所杀。</p></div></div></div></div><div class="lab">检索 · tools\pick_story.py · 本库实测</div><div class="term"><div class="row"><span class="dim"># 签号 = sha1(书名|路径|起止行)[:6]</span></div>
+<div class="row"><span class="ok">$ </span><span class="">pick_story.ticket(&quot;21辽史&quot;, &quot;.../114_卷一百十四·列传第四十四_译文.md&quot;, 38, 45)</span></div>
+<div class="row"><span class="hl b">&#x27;033651&#x27;</span><span class="ok b">   OK 与回答首行 #033651 一致</span></div>
+<div class="row"><span class="">窗口 38–45 首句：萧特烈，字讹都碗，遥辇洼可汗宫分人。</span></div>
+<div class="row"><span class="hl">→ 签号能重算：这就是「真的去查了」的凭证</span></div></div></section>
+<section><div class="eyebrow">08 · 抽签讲史</div><h2>抽签器</h2><ul><li>27 部书先等概率选书，再书内等概率选窗，不偏爱通鉴</li><li>自动避开最近抽到或讲过的书；可指定 --dynasty、--book、--topic</li><li>讲完用 --check 校验：签号唯一，虚构必标注</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 讲个故事</div></div></div><div class="lab">检索 · tools\pick_story.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\pick_story.py --no-log</span></div>
+<div class="row"><span class="">抽签——分层等概率；候选书 24 部 / 18418 窗</span></div>
+<div class="row"><span class="hl b">■ 05晋书文白</span></div>
+<div class="row"><span class="ok b">  签号      #19FFF2   ← 讲史回答的首行请原样带上此签号</span></div>
+<div class="row"><span class="">  路径      …\073_《晋书》文白对照·卷七十三·列传第四十三.md</span></div>
+<div class="row"><span class="">  行号      95–104（共 10 行）</span></div>
+<div class="row"><span class="">  首句      希字始彦。初拜秘书郎，累迁司徒右长史、黄门侍郎、</span></div>
+<div class="row"><span class="">  一轮一签  本条回答讲完这一个即止：不要自问自答续讲第二个故事</span></div>
+<div class="row"><span class="dim"># 窗口中位数仅 8 行，须前后补全：讲清是谁、经历了什么、结局如何</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p><b>《晋书·卷七十三·列传第四十三》</b>。签号 <mark>#19FFF2</mark>。</p><p>庾希，字始彦，是庾冰之子，曾任徐、兖二州刺史。桓温深忌其弟庾倩，海西公被废后，诬陷庾倩、庾柔为武陵王党羽而杀之。庾希闻难，与弟庾邈、子庾攸之逃进海陵的沼泽。后来他与武沈之子武遵在海滨聚众，夜入京口城，战败被擒：<mark>「希、邈及子侄五人斩于建康市，遵及党与并伏诛，唯友及蕴诸子获全。」</mark></p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 1 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\pick_story.py --check 答复.txt</span></div>
+<div class="row"><span class="ok b"># 结论：合格（仅 1 处 WARN：签号为试抽，未入台账）</span></div></div></section>
+<section><div class="eyebrow">09 · 引文核验 verify</div><h2>引文核验</h2><ul><li>逐条回库比对：查无此文、书名错配、卷号不存在都报 FAIL</li><li>说话人归属闸：魏徵的话记到李勣名下 → FAIL</li><li>字号、帝号、「史载」归因也有闸；FAIL 必须改，未过核不得发出</li></ul><div class="lab">群里的一次提问 · 真实记录（节选）</div><div class="chat"><div class="msg user"><div class="bub">@robot 讲一下黄肠题凑</div></div><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>黄肠题凑是汉代高级墓葬制度，主要见于<mark>《汉书·梅福传》</mark>等史料记载。</p></div></div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答案.txt   # 把回答里的出处和引文存成稿件</span></div>
+<div class="row"><span class="ok">OK   引文「梓宫、便房、黄肠题凑各一具」→ 《汉书》…/077_卷六十八·霍光金日磾传第三十八….md:79-79（原文）</span></div>
+<div class="row"><span class="bad b">FAIL 答案把引文系于《汉书》的「梅福传」，而该卷此段实际篇名为「霍光金日磾传第三十八」——传名与实际不符（出处对不上，须改成真篇名）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 示例答案.txt   # 示例：魏徵的话记给李勣</span></div>
+<div class="row"><span class="bad b">FAIL 引文「夫以铜为镜…」答案记在「李勣」名下，但它命中处（《旧唐书·卷七十一》…/071_卷七十一_魏徵_文白.md:279，篇名「列传第二十一」）连上下各 4 行都没有此人独立成词的记载——疑似张冠李戴</span></div>
+<div class="row"><span class="dim"># 结论：FAIL —— 必须修改后重跑</span></div></div><div class="lab">改正后重发的答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>黄肠题凑见于<b>《汉书·卷六十八·霍光金日磾传第三十八》</b>，记霍光去世时所赐丧葬之物：</p><p>• <mark>「梓宫、便房、黄肠题凑各一具，枞木外臧椁十五具。东园温明，皆如乘舆制度。」</mark></p><p>（我先前把这段记错了篇名，核验发现与库内不符，已按真篇名改正。）</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 1 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">10 · 猜人物</div><h2>猜人物</h2><ul><li>候选人名只来自语料原文，不来自模型记忆</li><li>逐条线索对照 √／×／△，反证栏必须写出来</li><li>对不上或不唯一，答「无法唯一确定」才算合规</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 猜人物：羯人；与门臣祭酒有关；说过「脱遇光武，当并驱于中原」</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 谜 羯人 门臣祭酒 &quot;当并驱于中原&quot;</span></div>
+<div class="row"><span class="dim"># ① 锚度：「羯人」11 文件·窄｜「门臣祭酒」3 文件·独有引语级｜「当并驱于中原」1 文件·独有引语级</span></div>
+<div class="row"><span class="dim"># ③ 候选（全部来自语料原文）：</span></div>
+<div class="row"><span class="">   ★ 石勒（段内 3·距 15 字）</span></div>
+<div class="row"><span class="">   ★ 张良（段内 2·距 16 字）</span></div>
+<div class="row"><span class="">   ★ 彭越（段内 1·距 18 字）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 对照 石勒 &quot;当并驱于中原&quot; 羯人</span></div>
+<div class="row"><span class="ok">[1] √ 「当并驱于中原」共现 2 段  《晋书·卷一百五·载记第五》:117 [原文]</span></div>
+<div class="row"><span class="ok">[2] √ 「羯人」共现 7 段</span></div>
+<div class="row"><span class="dim"># 反证栏：× 0 条、△ 0 条（对不上必须写出来；全打勾≠真核对）</span></div>
+<div class="row"><span class="hl b">→ 结论建议：全部线索共现——「石勒」通过；仍须与其他候选比，再过 verify</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>答案：石勒</p><p>线索对照：羯人√；门臣祭酒√；<mark>「当并驱于中原」</mark>√。无不符。</p><p>• <b>《晋书·卷一百五·载记第五》</b>记石勒酒酣时对徐光说：<mark>「朕若逢高皇，当北面而事之，与韩彭竞鞭而争先耳。脱遇光武，当并驱于中原，未知鹿死谁手。」</mark></p><p>候选里的张良、彭越只是同段被提到，不是说话人。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\check_guess.py 答复.txt</span></div>
+<div class="row"><span class="ok b"># 结论：合格（形态①全中：已声明无不符）</span></div></div></section>
+<section><div class="eyebrow">11 · 辨伪六查</div><h2>辨伪</h2><ul><li>六查都要回库落到卷次行号，不凭「像不像」</li><li>正史基本不载私下密谈和层层辩难的长对话，见此先默认可疑</li><li>答复三段式：结论 → 最接近的原文 → 具体冲突点</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 沈括拜访王安石论新法，是真的吗？</div></div></div><div class="lab">检索 · tools\factcheck.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\factcheck.py 稿件.txt --person 沈括</span></div>
+<div class="row"><span class="dim"># 事实核查：沈括（生约 1031 – 卒 1095）</span></div>
+<div class="row"><span class="bad b">FAIL 第1行命中错误用词「沈括去拜访王安石，与他论新法。王安石」→ 应作：二人私下会面论新法，正史全无此载；史载沈括「希安石意」（迎合）…</span></div>
+<div class="row"><span class="bad b">FAIL 第1行命中错误用词「换一批人」→ 应作：现代治理话术，宋人无此语；史实是「遣提举官四十余辈，颁行天下」…</span></div>
+<div class="row"><span class="hl b"># 结论：存在 2 处硬错，必须改</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>结论：库里查不到沈括与王安石私下会面论新法的记载，这个说法不能当史实讲。</p><p>• 最接近的原文，<b>《宋史·卷四百七十一·列传第二百三十》</b>：<mark>「三司使沈括谒宰相吴充论免役法，确言括为近臣，见朝廷法令未便，不公言之而私语执政，意王安石既去，新法可摇耳。」</mark></p><p>• 冲突点：谒见的是宰相吴充，不是王安石，且此时王安石已去位；另<b>《宋史·卷一百八十一·志第一百三十四》</b>只载他在盐法上<mark>「括希安石意」</mark>（迎合）。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 2 条｜《》书名 2 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\factcheck.py 答复.txt --person 沈括</span></div>
+<div class="row"><span class="ok b"># 结论：无硬错（0 处待人工确认）</span></div></div></section>
+<section><div class="eyebrow">12 · 事实卡与写史双闸</div><h2>事实卡与双闸</h2><ul><li>14 张事实卡：生卒、字号、官职节点年、大事年，每条挂卷次行号</li><li>banned 规则拦伪造关系和当代话术（如「精忠报国」）</li><li>虚构必须标注，并附「史实支点：《书名·卷次》」</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 帮我写一段岳飞的故事</div></div></div><div class="lab">检索 · tools\factcheck.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\factcheck.py 稿件.txt --person 岳飞</span></div>
+<div class="row"><span class="dim"># 事实核查：岳飞（生约 1103 – 卒 1142）</span></div>
+<div class="row"><span class="bad b">FAIL 第1行命中错误用词「精忠报国」→ 应作：《宋史》本传作「尽忠报国」…365·115；「精忠」为后世讹传</span></div>
+<div class="row"><span class="bad b">FAIL 第1行命中错误用词「岳飞谋反」→ 应作：「谋反」是万俟卨等诬构（365·115）；本传明载「阅实无左验，铸明其无辜」…</span></div>
+<div class="row"><span class="dim">INFO 可用的正史支点：郾城大捷｜365·91</span></div>
+<div class="row"><span class="dim">INFO 可用的正史支点：背刺「尽忠报国」四大字｜365·115</span></div>
+<div class="row"><span class="hl b"># 结论：存在 2 处硬错，必须改</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>据<b>《宋史·卷三百六十五·列传第一百二十四》</b>写，不添虚构情节：</p><p>• 郾城之战，金兵逼城，岳飞说：<mark>「金人伎穷矣。」</mark>随后<mark>「乃日出挑战，且骂之」</mark>。</p><p>• 朱仙镇大破兀术后，他<mark>「一日奉十二金字牌」</mark>，愤惋泣下，东向再拜：<mark>「十年之力，废于一旦。」</mark></p><p>• 受审时，<mark>「飞裂裳以背示铸，有“尽忠报国”四大字，深入肤理」</mark>。</p><p>若要加对话或场景，我会标【虚构】并附史实支点。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 6 条｜《》书名 1 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\factcheck.py 答复.txt --person 岳飞</span></div>
+<div class="row"><span class="ok b"># 结论：无硬错（0 处待人工确认）</span></div></div></section>
+<section><div class="eyebrow">13 · 边界：查不到就说查不到</div><h2>查不到就说</h2><ul><li>范围锁：仅 27 部；《续资治通鉴》《明通鉴》等未收录，必须明示</li><li>1840 年以后只有《清史稿》；《大明律》等律条原文不在库里</li><li>只答「是什么」，不答「为什么」；推测须标「以下为推测」</li><li>跑不了检索时答「我查不到原文库，无法确定」</li></ul><div class="lab">示例提问</div><div class="chat"><div class="msg user"><div class="bub">@robot 戒石铭是什么</div></div></div><div class="lab">检索 · tools\rag.py · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py 戒石铭</span></div>
+<div class="row"><span class="dim"># rag query 「戒石铭」 → 源 data｜扫描 4408 文件 / 246.9 M字｜候选 0 文件｜0.35s</span></div>
+<div class="row"><span class="dim"># 零命中关键词：戒石铭（连繁简/异体变体都没有）</span></div>
+<div class="row"><span class="bad b">=== 判定：无据（0 段） ===</span></div>
+<div class="row"><span class=" b">本库未见「戒石铭」。</span></div>
+<div class="row"><span class="hl">禁止凭记忆作答。应回答：本库未载／正史无此记载，并说明已检索的关键词与范围。</span></div>
+<div class="row"><span class="dim">不要再自行换词反复全库重试（每换一次就重扫 247MB）。</span></div></div><div class="lab">robot 答复 · 已过库内核验</div><div class="chat"><div class="msg bot"><div class="av">R</div><div><div class="who">robot</div><div class="bub"><p>本库未载<mark>「戒石铭」</mark>。</p><p>我已用<mark>「戒石铭」</mark>检索全库（27 部、4408 个文件），零命中，连繁简、异体变体也没有，所以不凭记忆作答。</p><p>若您能给朝代或人物线索，我可以换成史文用词再查一次。</p></div></div></div></div><div class="lab">核验 · 本库实测</div><div class="term"><div class="row"><span class="ok">$ </span><span class="">python tools\rag.py verify 答复.txt</span></div>
+<div class="row"><span class="dim"># 抽取：引文 0 条｜《》书名 0 处</span></div>
+<div class="row"><span class="ok b"># 结论：无 FAIL（WARN 0）</span></div></div></section>
+<section><div class="eyebrow">14 · 自检与维护</div><h2>自检与维护</h2><ul><li>selftest.py：体检索引结构、路径、闸门样本和抽签台账</li><li>make_indexes.py 一键重建索引并验收；新增人物只加一张 md 卡</li><li>check_dupnames.py：89 种重名文件，取文件必须带书名文件夹</li></ul><div class="lab">检索 · tools\_selftest_report.txt（随发布包附带）｜check_dupnames.py（本库实测）</div><div class="term"><div class="row"><span class="dim"># 索引体检报告（快档 --quick），随发布包附带：</span></div>
+<div class="row"><span class="ok">OK    00-目录索引.md（120 行）</span></div>
+<div class="row"><span class="ok">OK    02-人物字号索引.md（42188 行）</span></div>
+<div class="row"><span class="ok">OK    03-人物出现索引.md（13243 行）</span></div>
+<div class="row"><span class="ok">OK    04-故事精选索引.md（19803 行）</span></div>
+<div class="row"><span class="ok">OK    05-卷名总表.md（5258 行）</span></div>
+<div class="row"><span class="ok">OK    06-表卷与原件索引.md（222 行）</span></div>
+<div class="row"><span class="ok">OK    体检未动抽签台账（_draw_log.md / story_log.md 前后字节一致）</span></div>
+<div class="row"><span class="ok b">结论：全部通过</span></div>
+<div class="row"><span class="ok">$ </span><span class="">python tools\check_dupnames.py</span></div>
+<div class="row"><span class="">全库 md 文件 4408 ｜ 重名 basename 89 种 ｜ 涉及文件 187 个</span></div>
+<div class="row"><span class="">   50 种  11北齐书文白 + 12周书文白</span></div>
+<div class="row"><span class="">   17 种  06宋书文白 + 17新唐书文白</span></div>
+<div class="row"><span class="hl">提醒：Glob 必须带书文件夹前缀；拿到的路径先看第一段文件夹名再定书名。</span></div></div></section>
+<footer>说明：除标明“真实记录”的两处外，提问均为示例；答复按 skill 规则生成并逐条过库内 verify 核验；终端输出为在完整库上的实际运行结果。skill：ershisishi-wenbai ｜ github.com/whewgg/skill-The-Twenty-Four-Histories-history</footer>
+</div></body></html>
